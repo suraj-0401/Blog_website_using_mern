@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon BACKEND/index.js",
     "dev": "nodemon BACKEND/index.js",
-    "build": "npm install && npm install --prefix frontened && npm run build --prefix frontened"
+    "build": "npm install && npm install --prefix FRONTEND && npm run build --prefix FRONTEND"
   },
   "author": "",
   "license": "ISC",

@@ -78,13 +78,12 @@ io.on('connection', (socket) => {
   });
 });
 
-// Handle React routing, return all requests to index.html
 
 // join with frontened 
-app.use(express.static(path.join(_dirname,'/FRONTENED/build')))
+app.use(express.static(path.join(_dirname,'/FRONTEND/build')))
 
 app.get('*',(_,res)=>{
-  res.sendFile(path.resolve(_dirname,"FRONTENED","build","index.html"))
+  res.sendFile(path.resolve(_dirname,"FRONTEND","build","index.html"))
 })
 
 

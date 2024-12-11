@@ -10,11 +10,15 @@ import blogRoute from './routes/route.blog.js';
 import commentRoute from './routes/route.comment.js';
 import http from 'http'; // Import http module
 import { Server } from 'socket.io'; // Correct import for Socket.IO
-
+import path from 'path';
 dotenv.config(); 
 const app = express();
 const server = http.createServer(app); // Create an HTTP server
 const io = new Server(server, { cors: { origin: '*' } }); // Initialize Socket.IO with the server
+
+// path 
+const _dirname=path.resolve();
+
 
 app.use(cors({
   origin: 'http://localhost:3001', 
@@ -57,10 +61,10 @@ mongoose.connect(MONGO_URL)
     console.error('MongoDB connection error:', error);
   });
 
-// Routes
-app.get('/', (req, res) => {
-  res.send('Hello World, Suraj!');
-});
+// // Routes
+// app.get('/', (req, res) => {
+//   res.send('Hello World, Suraj!');
+// });
 
 app.use('/api/users', userRoute); // User-related routes
 app.use('/api/blogs', blogRoute); // Blog-related routes
@@ -73,6 +77,16 @@ io.on('connection', (socket) => {
     console.log('Client disconnected');
   });
 });
+
+// Handle React routing, return all requests to index.html
+
+// join with frontened 
+app.use(express.static(path.join(_dirname,'/FRONTENED/build')))
+
+app.get('*',(_,res)=>{
+  res.sendFile(path.resolve(_dirname,"FRONTENED","build","index.html"))
+})
+
 
 // Start the server
 server.listen(port, () => { // Use server to listen
